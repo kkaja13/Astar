@@ -43,6 +43,15 @@ int graph::heuristic(const Cell& a, const Cell& end)
 	return h_straight + h_diag;
 }
 
+void graph::updateBorderCell(int x, int y, int g_new, int h_new, int parentX, int parentY)
+{
+	grid_cells[x][y].parentX = parentX;
+	grid_cells[x][y].parentY = parentY;
+	grid_cells[x][y].g = g_new;
+	grid_cells[x][y].h = h_new;
+	grid_cells[x][y].f = g_new + h_new;
+}
+
 void graph::search(Cell start, Cell end)
 {
 	vector<vector<bool>> on_border(rows, vector<bool>(cols, false));
@@ -85,7 +94,6 @@ void graph::search(Cell start, Cell end)
 			}
 		}
 		border.pop();
-
 		//z prvku na hranici se stane navstiveny prvek
 		on_border[curr.x][curr.y] = false;
 		explored[curr.x][curr.y] = true;
@@ -131,24 +139,18 @@ void graph::search(Cell start, Cell end)
 					g_new = grid_cells[curr.x][curr.y].g + 14;
 				}
 
+				int h_new = heuristic(grid_cells[next_x][next_y], end);
+
 				if (on_border[next_x][next_y] == false)        //jestli neni prvek uz na hranici
 				{
 					//do fronty border pridam next, jeho rodice budou souradnice curr, spoctu f = g + h, bude to prvek na hranici
-					grid_cells[next_x][next_y].parentX = curr.x;
-					grid_cells[next_x][next_y].parentY = curr.y;
-					grid_cells[next_x][next_y].g = g_new;
-					grid_cells[next_x][next_y].h = heuristic(grid_cells[next_x][next_y], end);
-					grid_cells[next_x][next_y].f = grid_cells[next_x][next_y].g + grid_cells[next_x][next_y].h;
+					updateBorderCell(next_x, next_y, g_new, h_new, curr.x, curr.y);
 					border.push(grid_cells[next_x][next_y]);
 					on_border[next_x][next_y] = true;
 				}
 				else if (g_new < grid_cells[next_x][next_y].g)      //je-li nové g lepsi nez prvku na hranici, pridej potomka next jako vyse
 				{
-					grid_cells[next_x][next_y].parentX = curr.x;
-					grid_cells[next_x][next_y].parentY = curr.y;
-					grid_cells[next_x][next_y].g = g_new;
-					grid_cells[next_x][next_y].h = heuristic(grid_cells[next_x][next_y], end);
-					grid_cells[next_x][next_y].f = grid_cells[next_x][next_y].g + grid_cells[next_x][next_y].h;
+					updateBorderCell(next_x, next_y, g_new, h_new, curr.x, curr.y);
 					border.push(grid_cells[next_x][next_y]);
 					on_border[next_x][next_y] = true;
 				}
@@ -197,22 +199,35 @@ void graph::make_path(Cell start, Cell end)
 
 void graph::read_graph(const std::string& name)
 {
-	std::ifstream file;
+	ifstream file;
 	file.open(name);
 
 	if (file.is_open())
 	{
-		file >> rows;
-		file >> cols;
-		vector<int> help;           //sloupec matice grid, tj. bludiste
-		vector<Cell> cells_help;    //uklada bunky jednoho sloupce do grid_cells
-		int pom;
+		file >> rows >> cols;
+
+		if (rows <= 0 || cols <= 0)
+		{
+			has_solution = false;
+			return;
+		}
+
+		vector<int> column;           //sloupec matice grid, tj. bludiste
+		vector<Cell> cells_column;    //uklada bunky jednoho sloupce do grid_cells
+		int value;
 		for (int i = 0; i < rows; i++)
 		{
 			for (int j = 0; j < cols; j++)
 			{
-				file >> pom;
-				help.push_back(pom);
+				file >> value;
+				column.push_back(value);
+
+				if (value != 0 && value != 1)
+				{
+					has_solution = false;
+					file.close();
+					return;
+				}
 
 				Cell c{};     //nova bunka pro grid_cells, rodice prozatím mimo, f,g,h na nule
 				c.x = i;
@@ -223,13 +238,14 @@ void graph::read_graph(const std::string& name)
 				c.g = 0;
 				c.h = 0;
 
-				cells_help.push_back(c); //bunku prida do cells_help, tak vznikne sloupec
+				cells_column.push_back(c); //bunku prida do cells_help, tak vznikne sloupec
 			}
-			grid.push_back(help); //prida sloupec do bludiste
-			grid_cells.push_back(cells_help); //prida sloupec do matice grid_cells
-			help.clear();
-			cells_help.clear();
+			grid.push_back(column); //prida sloupec do bludiste
+			grid_cells.push_back(cells_column); //prida sloupec do matice grid_cells
+			column.clear();
+			cells_column.clear();
 		}
+		file.close();
 	}
 	else
 	{
