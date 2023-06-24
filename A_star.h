@@ -40,7 +40,7 @@ public:
 
 	bool is_valid(Cell a);	//jsou-li souradnice bunky v rozsahu bludište
 	int heuristic(const Cell& a, const Cell& end);	//vypocet heurestiky, hodnoty h
-	void search(Cell start_, Cell end_, int m, int n);	//nalezne nejkratsi cestu od startu do cíle
+	void search(Cell start, Cell end);	//nalezne nejkratsi cestu od startu do cíle
 
 	void print();							//vypise graf (matici)
 	void make_path(Cell start, Cell end);	//zpetne zkonstruuje cestu vedouci od cile ke startu

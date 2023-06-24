@@ -9,7 +9,7 @@ int main()
     Cell start(0, 0);
     Cell end(4, 2);
     g.print();
-    g.search(start, end, g.getRows(), g.getCols());
+    g.search(start, end);
 
     if (g.has_solution) //pokud má øešení, vypiš cestu k cíli
     {

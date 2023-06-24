@@ -43,10 +43,10 @@ int graph::heuristic(const Cell& a, const Cell& end)
 	return h_straight + h_diag;
 }
 
-void graph::search(Cell start, Cell end, int m, int n)
+void graph::search(Cell start, Cell end)
 {
-	vector<vector<bool>> on_border(m, vector<bool>(n, false));
-	vector<vector<bool>> explored(m, vector<bool>(n, false));
+	vector<vector<bool>> on_border(rows, vector<bool>(cols, false));
+	vector<vector<bool>> explored(rows, vector<bool>(cols, false));
 
 	explored = std::vector<std::vector<bool>>(rows, std::vector<bool>(cols, false)); //matice bunek, ty s hodnotou true jsme prosli
 	on_border = std::vector<std::vector<bool>>(rows, std::vector<bool>(cols, false)); //matice bunek, ty s hodnotou true jsou na hranici
@@ -106,7 +106,7 @@ void graph::search(Cell start, Cell end, int m, int n)
 
 				//nejprve zjistim, jestli ma smysl zkoumat souseda, je-li to cil, prekazka, explored, mimo bludiste
 
-				if (next_x < 0 || next_x >= m || next_y < 0 || next_y >= n) // kontroluju souradnice souseda
+				if (next_x < 0 || next_x >= rows || next_y < 0 || next_y >= cols) // kontroluju souradnice souseda
 				{
 					continue;
 				}
