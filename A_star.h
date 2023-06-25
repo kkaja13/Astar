@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <cmath>
+using namespace std;
 
 struct Cell
 {
@@ -21,29 +22,29 @@ struct Cell
 class graph
 {
 private:
-	std::vector<std::vector<int>> matrix;         //dvourozmerne pole, bludiste
-	std::vector<std::vector<Cell>> cells;  //matice jednotlivych bunek v bludisti
-	std::vector<Cell> path;		//vektor obsahujici bunky cesty od startu do cile
+	vector<vector<int>> matrix;         //dvourozmerne pole, bludiste
+	vector<vector<Cell>> cells;  //matice jednotlivych bunek v bludisti
+	vector<Cell> path;		//vektor obsahujici bunky cesty od startu do cile
 	int rows, cols;
 
 public:
 	graph(int rows, int cols);
-	graph(int rows, int cols, bool has_path, const std::vector<std::vector<int>>& grid, const std::vector<std::vector<Cell>>& grid_cells)
+	graph(int rows, int cols, bool has_path, const vector<vector<int>>& grid, const vector<vector<Cell>>& grid_cells)
 		: rows(rows), cols(cols), has_path(has_path), matrix(grid), cells(grid_cells) {}
 	graph(const graph& src);
 	~graph() = default;
 
 	bool has_path;
 
-	bool is_valid(Cell a);	//jsou-li souradnice bunky v rozsahu bludište
+	bool is_valid(Cell a) const;	//jsou-li souradnice bunky v rozsahu bludiÅ¡te
 	int heuristic(const Cell& a, const Cell& end);	//vypocet heurestiky, hodnoty h
-	void updateBorderCell(int x, int y, int g_new, int h_new, int parentX, int parentY); //pøiøadí rodièe k buòce, stejnì jako g,h,f parametry
-	void search(Cell start, Cell end);	//nalezne nejkratsi cestu od startu do cíle
+	void updateBorderCell(int x, int y, int g_new, int h_new, int parentX, int parentY); //pÃ¸iÃ¸adÃ­ rodiÃ¨e k buÃ²ce, stejnÃ¬ jako g,h,f parametry
+	void search(Cell start, Cell end);	//nalezne nejkratsi cestu od startu do cÃ­le
 
 	void print();							//vypise graf (matici)
 	void make_path(Cell start, Cell end);	//zpetne zkonstruuje cestu vedouci od cile ke startu
 	void write_path();						//vypise souradnice proslych bunek
 
-	void read_graph(const std::string& name); //nacte graf ze souboru txt
+	void read_graph(const string& name); //nacte graf ze souboru txt
 };
 
