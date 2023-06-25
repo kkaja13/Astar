@@ -2,7 +2,6 @@
 #include <iostream>
 #include <fstream>
 #include <queue>
-#include <vector>
 using namespace std;
 
 graph::graph(int rows, int cols)
@@ -11,9 +10,9 @@ graph::graph(int rows, int cols)
 	this->cols = cols;
 	has_path = false;
 
-	matrix = std::vector<std::vector<int>>(rows, std::vector<int>(cols, 0));
-	cells = std::vector<std::vector<Cell>>(rows, std::vector<Cell>(cols));
-	path = std::vector<Cell>();
+	matrix = vector<vector<int>>(rows, vector<int>(cols, 0));
+	cells = vector<vector<Cell>>(rows, vector<Cell>(cols));
+	path = vector<Cell>();
 }
 
 graph::graph(const graph& src)
@@ -23,12 +22,9 @@ graph::graph(const graph& src)
 	this->has_path = src.has_path;
 }
 
-bool graph::is_valid(Cell a)
+bool graph::is_valid(Cell a) const
 {
-	if ((a.x >= 0) && (a.x < rows) && (a.y >= 0) && (a.y < cols)) //pokud jsou souradnice v poradku, vraci true
-		return true;
-	else
-		return false;
+	return ((a.x >= 0) && (a.x < rows) && (a.y >= 0) && (a.y < cols)); //pokud jsou souradnice v poradku, vraci true
 }
 
 int graph::heuristic(const Cell& a, const Cell& end) 
@@ -57,9 +53,6 @@ void graph::search(Cell start, Cell end)
 	vector<vector<bool>> on_border(rows, vector<bool>(cols, false));
 	vector<vector<bool>> visited(rows, vector<bool>(cols, false));
 
-	visited = std::vector<std::vector<bool>>(rows, std::vector<bool>(cols, false)); //matice bunek, ty s hodnotou true jsme prosli
-	on_border = std::vector<std::vector<bool>>(rows, std::vector<bool>(cols, false)); //matice bunek, ty s hodnotou true jsou na hranici
-
 	has_path = false;
 
 	if (!is_valid(start) || !is_valid(end)) //kdyby nebyly souradnice startu a cile platne, nema smysl hledat cestu
@@ -74,7 +67,7 @@ void graph::search(Cell start, Cell end)
 	cells[start.x][start.y].parentX = start.x;
 	cells[start.x][start.y].parentY = start.y;
 
-	std::priority_queue<Cell> frontier;  //fronta bunek na hranici, na vrchu je ta s nejmensi f hodnotou, tzv. "open list"
+	priority_queue<Cell> frontier;  //fronta bunek na hranici, na vrchu je ta s nejmensi f hodnotou, tzv. "open list"
 	frontier.push(cells[start.x][start.y]);
 	on_border[start.x][start.y] = true;
 
@@ -160,9 +153,9 @@ void graph::print()
 	{
 		for (int j = 0; j < cols; j++)
 		{
-			std::cout << matrix[i][j] << " ";
+			cout << matrix[i][j] << " ";
 		}
-		std::cout << std::endl;
+		cout << endl;
 	}
 	cout << endl;
 }
