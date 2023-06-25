@@ -185,7 +185,7 @@ void graph::make_path(Cell start, Cell end)
 	path.push_back(cells[start.x][start.y]); //prida startovni bunku nakonec
 }
 
-void graph::read_graph(const std::string& name)
+void graph::read_graph(const string& name)
 {
 	ifstream file;
 	file.open(name);
