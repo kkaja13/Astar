@@ -21,26 +21,23 @@ struct Cell
 class graph
 {
 private:
-	std::vector<std::vector<int>> grid;         //dvourozmerne pole, bludiste
-	std::vector<std::vector<Cell>> grid_cells;  //matice jednotlivych bunek v bludisti
+	std::vector<std::vector<int>> matrix;         //dvourozmerne pole, bludiste
+	std::vector<std::vector<Cell>> cells;  //matice jednotlivych bunek v bludisti
 	std::vector<Cell> path;		//vektor obsahujici bunky cesty od startu do cile
 	int rows, cols;
 
 public:
 	graph(int rows, int cols);
-	graph(int rows, int cols, bool has_solution, const std::vector<std::vector<int>>& grid, const std::vector<std::vector<Cell>>& grid_cells)
-		: rows(rows), cols(cols), has_solution(has_solution), grid(grid), grid_cells(grid_cells) {}
+	graph(int rows, int cols, bool has_path, const std::vector<std::vector<int>>& grid, const std::vector<std::vector<Cell>>& grid_cells)
+		: rows(rows), cols(cols), has_path(has_path), matrix(grid), cells(grid_cells) {}
 	graph(const graph& src);
 	~graph() = default;
 
-	bool has_solution;
-
-	int getRows() { return this->rows; }
-	int getCols() { return this->cols; }
+	bool has_path;
 
 	bool is_valid(Cell a);	//jsou-li souradnice bunky v rozsahu bludište
 	int heuristic(const Cell& a, const Cell& end);	//vypocet heurestiky, hodnoty h
-	void updateBorderCell(int x, int y, int g, int h, int parentX, int parentY);
+	void updateBorderCell(int x, int y, int g_new, int h_new, int parentX, int parentY); //pøiøadí rodièe k buòce, stejnì jako g,h,f parametry
 	void search(Cell start, Cell end);	//nalezne nejkratsi cestu od startu do cíle
 
 	void print();							//vypise graf (matici)

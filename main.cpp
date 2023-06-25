@@ -7,17 +7,17 @@ int main()
     graph g(0, 0);
     g.read_graph("graf.txt");
     Cell start(0, 0);
-    Cell end(4, 2);
+    Cell end(6, 2);
     g.print();
     g.search(start, end);
 
-    if (g.has_solution) //pokud má øešení, vypiš cestu k cíli
+    if (g.has_path) //pokud má øešení, vypiš cestu k cíli
     {
         cout << "Cesta nalezena" << endl;
         g.make_path(start, end);
         g.write_path();
     }
-    else //pokud nemá øešení
+    else
     {
         cout << "Cesta nenalezena" << endl;
     }
