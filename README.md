@@ -1,12 +1,12 @@
 # A* algoritmus - pro hledání nejkratší cesty v grafu
 
 ### 1) Použité knihovny
-<iostream> obsahuje standardní funkce pro vstup a výstup
-<fstream> slouží ke čtení grafu, tj. matice reprezentující bludiště
-<queue> implementace fronty, použité pro ukládání buněk na hranici
-<vector> slouží k ukládání dat (matice buněk, cesta, atd.)
-<string> použité ke čtení grafu ze souboru
-<cmath> zde pro výpočet absolutní hodnoty ve funkci heuristic
+iostream: obsahuje standardní funkce pro vstup a výstup
+fstream: slouží ke čtení grafu, tj. matice reprezentující bludiště
+queue: implementace fronty, použité pro ukládání buněk na hranici
+vector: slouží k ukládání dat (matice buněk, cesta, atd.)
+string: použité ke čtení grafu ze souboru
+cmath: zde pro výpočet absolutní hodnoty ve funkci heuristic
 
 ### 2) Popis a diskuze zvolených algoritmů
 Funkce search(Cell start, Cell end) hledá nejkratší cestu od počátečního uzlu k cíli, další prvek vždy vybere z prioritní fronty, kde se navrchu nachází buňka s nejmenší hodnotou f = g + h. Hodnota g je vzdálenost od startu do aktuálního uzlu, takže součet předchozího g rodiče a vzdálenosti mezi rodičem a daným uzlem. Když uvažujeme čtverec o straně 10, pak po diagonále je vzdálenost 14 (odmocnina z 100 + 100), vertikální a horizontální soused je vzdálen 10. Hodnota h je heuristika, odhad vzdálenosti do cíle.
