@@ -19,11 +19,11 @@ Funkce search(Cell start, Cell end) hledá nejkratší cestu od počátečního 
 Funkce bool has_solution slouží k rozhodnutí, jestli existuje řešení. Vrátíme hodnotu true ve chvíli, kdy jsme našli cílový uzel. Pokud totiž neexistuje řešení (start/end jsou mimo rozsah, fronta je prázdná, tzn. neexistuje cesta k cíli), nevytváříme ani prošlou cestu.
 
 ### 3) Použití
-v herních aplikacích pro hledání nejkratší cesty mezi dvěma body
-k plánování tras a v navigačních systémech, hledání dopravního spojení
+v herních aplikacích pro hledání nejkratší cesty mezi dvěma body, k plánování tras a v navigačních systémech, hledání dopravního spojení
 
 ### 4) Příklad testů metod 
 viz soubor main.cpp
+
 vstupem (viz graf.txt) matice sousednosti, před ní je uvedený počet řádků a sloupců
 matice reprezentuje vzdálenost jednotlivých uzlů, "0" v mřížce znázorňuje volný průchod, "1" překážku
 
