@@ -141,14 +141,9 @@ void graph::search(Cell start, Cell end)
 
 				int h_new = heuristic(grid_cells[next_x][next_y], end);
 
-				if (on_border[next_x][next_y] == false)        //jestli neni prvek uz na hranici
-				{
-					//do fronty border pridam next, jeho rodice budou souradnice curr, spoctu f = g + h, bude to prvek na hranici
-					updateBorderCell(next_x, next_y, g_new, h_new, curr.x, curr.y);
-					border.push(grid_cells[next_x][next_y]);
-					on_border[next_x][next_y] = true;
-				}
-				else if (g_new < grid_cells[next_x][next_y].g)      //je-li nové g lepsi nez prvku na hranici, pridej potomka next jako vyse
+				//jestli neni prvek uz na hranici nebo je-li nové g lepsi nez prvku na hranici, pridej potomka next jako vyse
+				//do fronty border pridam next, jeho rodice budou souradnice curr, spoctu f = g + h, bude to prvek na hranici
+				if (!on_border[next_x][next_y] || g_new < grid_cells[next_x][next_y].g)
 				{
 					updateBorderCell(next_x, next_y, g_new, h_new, curr.x, curr.y);
 					border.push(grid_cells[next_x][next_y]);
