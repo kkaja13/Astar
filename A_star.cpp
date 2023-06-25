@@ -50,8 +50,8 @@ void graph::updateBorderCell(int x, int y, int g_new, int h_new, int parentX, in
 
 void graph::search(Cell start, Cell end)
 {
-	vector<vector<bool>> on_border(rows, vector<bool>(cols, false));
-	vector<vector<bool>> visited(rows, vector<bool>(cols, false));
+	vector<vector<bool>> on_border(rows, vector<bool>(cols, false)); //matice bunek, ty s hodnotou true jsme prosli
+	vector<vector<bool>> visited(rows, vector<bool>(cols, false));  //matice bunek, ty s hodnotou true jsou na hranici
 
 	has_path = false;
 
