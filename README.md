@@ -2,10 +2,15 @@
 
 ### 1) Použité knihovny
 iostream: obsahuje standardní funkce pro vstup a výstup
+
 fstream: slouží ke čtení grafu, tj. matice reprezentující bludiště
+
 queue: implementace fronty, použité pro ukládání buněk na hranici
+
 vector: slouží k ukládání dat (matice buněk, cesta, atd.)
+
 string: použité ke čtení grafu ze souboru
+
 cmath: zde pro výpočet absolutní hodnoty ve funkci heuristic
 
 ### 2) Popis a diskuze zvolených algoritmů
