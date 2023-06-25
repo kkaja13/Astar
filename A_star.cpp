@@ -67,7 +67,7 @@ void graph::search(Cell start, Cell end)
 		return;
 	}
 
-	//pocatecni bunka bude mít parametry na nule
+	//pocatecni bunka bude mÃ­t parametry na nule
 	grid_cells[start.x][start.y].f = 0;
 	grid_cells[start.x][start.y].h = 0;
 	grid_cells[start.x][start.y].g = 0;
@@ -83,7 +83,7 @@ void graph::search(Cell start, Cell end)
 		Cell curr = border.top(); //bunka s nejmensi f hodnotou, soucasti cesty
 		while (!border.empty()) //pokud je curr navstivene, priradi curr dalsi bunku ze fronty
 		{
-			if (explored[curr.x][curr.y] == true) //již navstiveny prvek vyjmu z fronty
+			if (explored[curr.x][curr.y] == true) //jiÅ¾ navstiveny prvek vyjmu z fronty
 			{
 				border.pop();
 				curr = border.top();
@@ -98,13 +98,13 @@ void graph::search(Cell start, Cell end)
 		on_border[curr.x][curr.y] = false;
 		explored[curr.x][curr.y] = true;
 
-		if (curr.x == end.x && curr.y == end.y) //pokud je curr cíl, existuje øešení
+		if (curr.x == end.x && curr.y == end.y) //pokud je curr cÃ­l, existuje Å™eÅ¡enÃ­
 		{
 			has_solution = true;
 			return;
 		}
 
-		//projdeme všechny možné sousedy, tj. 8 smìrù
+		//projdeme vÅ¡echny moÅ¾nÃ© sousedy, tj. 8 smÄ›rÅ¯
 		for (int i = -1; i <= 1; i++)
 		{
 			for (int j = -1; j <= 1; j++)
@@ -127,14 +127,14 @@ void graph::search(Cell start, Cell end)
 					continue;
 				}
 
-				//spoèítám g a h pro buòku -> dostanu f
+				//spoÄÃ­tÃ¡m g a h pro buÅˆku -> dostanu f
 				int g_new = 0; //g souseda, tj. dosavadni g od startu ke curr + vzdalenost od curr do next
 
-				if (i == 0 || j == 0)    //sousední prvek je kolmo od buòky curr
+				if (i == 0 || j == 0)    //sousednÃ­ prvek je kolmo od buÅˆky curr
 				{
 					g_new = grid_cells[curr.x][curr.y].g + 10;
 				}
-				else        //sousední prvek je na diagonále
+				else        //sousednÃ­ prvek je na diagonÃ¡le
 				{
 					g_new = grid_cells[curr.x][curr.y].g + 14;
 				}
@@ -148,7 +148,7 @@ void graph::search(Cell start, Cell end)
 					border.push(grid_cells[next_x][next_y]);
 					on_border[next_x][next_y] = true;
 				}
-				else if (g_new < grid_cells[next_x][next_y].g)      //je-li nové g lepsi nez prvku na hranici, pridej potomka next jako vyse
+				else if (g_new < grid_cells[next_x][next_y].g)      //je-li novÃ© g lepsi nez prvku na hranici, pridej potomka next jako vyse
 				{
 					updateBorderCell(next_x, next_y, g_new, h_new, curr.x, curr.y);
 					border.push(grid_cells[next_x][next_y]);
@@ -211,16 +211,16 @@ void graph::read_graph(const std::string& name)
 			has_solution = false;
 			return;
 		}
+		grid = vector<vector<int>>(rows, vector<int>(cols, 0));
+		grid_cells = vector<vector<Cell>>(rows, vector<Cell>(cols));
 
-		vector<int> column;           //sloupec matice grid, tj. bludiste
-		vector<Cell> cells_column;    //uklada bunky jednoho sloupce do grid_cells
 		int value;
 		for (int i = 0; i < rows; i++)
 		{
 			for (int j = 0; j < cols; j++)
 			{
 				file >> value;
-				column.push_back(value);
+				//column.push_back(value);
 
 				if (value != 0 && value != 1)
 				{
@@ -228,8 +228,9 @@ void graph::read_graph(const std::string& name)
 					file.close();
 					return;
 				}
+				grid[i][j] = value;
 
-				Cell c{};     //nova bunka pro grid_cells, rodice prozatím mimo, f,g,h na nule
+				Cell c{};     //nova bunka pro grid_cells, rodice prozatÃ­m mimo, f,g,h na nule
 				c.x = i;
 				c.y = j;
 				c.parentX = -1;
@@ -238,12 +239,8 @@ void graph::read_graph(const std::string& name)
 				c.g = 0;
 				c.h = 0;
 
-				cells_column.push_back(c); //bunku prida do cells_help, tak vznikne sloupec
+				grid_cells[i][j] = c;
 			}
-			grid.push_back(column); //prida sloupec do bludiste
-			grid_cells.push_back(cells_column); //prida sloupec do matice grid_cells
-			column.clear();
-			cells_column.clear();
 		}
 		file.close();
 	}
