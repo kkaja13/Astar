@@ -67,7 +67,7 @@ void graph::search(Cell start, Cell end)
 		return;
 	}
 
-	//pocatecni bunka bude mít parametry na nule
+	//pocatecni bunka bude mÃ­t parametry na nule
 	cells[start.x][start.y].f = 0;
 	cells[start.x][start.y].h = 0;
 	cells[start.x][start.y].g = 0;
@@ -83,7 +83,7 @@ void graph::search(Cell start, Cell end)
 		Cell curr = frontier.top(); //bunka s nejmensi f hodnotou, soucasti cesty
 		while (!frontier.empty()) //pokud je curr navstivene, priradi curr dalsi bunku ze fronty
 		{
-			if (visited[curr.x][curr.y] == true) //již navstiveny prvek vyjmu z fronty
+			if (visited[curr.x][curr.y] == true) //jiÅ¾ navstiveny prvek vyjmu z fronty
 			{
 				frontier.pop();
 				curr = frontier.top();
@@ -98,13 +98,13 @@ void graph::search(Cell start, Cell end)
 		on_border[curr.x][curr.y] = false;
 		visited[curr.x][curr.y] = true;
 
-		if (curr.x == end.x && curr.y == end.y) //pokud je curr cíl, existuje øešení
+		if (curr.x == end.x && curr.y == end.y) //pokud je curr cÃ­l, existuje Å™eÅ¡enÃ­
 		{
 			has_path = true;
 			return;
 		}
 
-		//projdeme všechny možné sousedy, tj. 8 smìrù
+		//projdeme vÅ¡echny moÅ¾nÃ© sousedy, tj. 8 smÄ›rÅ¯
 		for (int i = -1; i <= 1; i++)
 		{
 			for (int j = -1; j <= 1; j++)
@@ -112,7 +112,7 @@ void graph::search(Cell start, Cell end)
 				int next_x = curr.x + i;
 				int next_y = curr.y + j;
 
-				//nejprve zjistim, jestli ma smysl zkoumat souseda, je-li to cil, prekazka, explored, mimo bludiste
+				//nejprve zjistim, jestli ma smysl zkoumat souseda, je-li to prekazka, visited, mimo bludiste nebo curr
 
 				if (next_x < 0 || next_x >= rows || next_y < 0 || next_y >= cols) // kontroluju souradnice souseda
 				{
@@ -127,21 +127,21 @@ void graph::search(Cell start, Cell end)
 					continue;
 				}
 
-				//spoèítám g a h pro buòku -> dostanu f
+				//spoÄÃ­tÃ¡m g a h pro buÅˆku -> dostanu f
 				int g_new = 0; //g souseda, tj. dosavadni g od startu ke curr + vzdalenost od curr do next
 
-				if (i == 0 || j == 0)    //sousední prvek je kolmo od buòky curr
+				if (i == 0 || j == 0)    //sousednÃ­ prvek je kolmo od buÅˆky curr
 				{
 					g_new = cells[curr.x][curr.y].g + 10;
 				}
-				else        //sousední prvek je na diagonále
+				else        //sousednÃ­ prvek je na diagonÃ¡le
 				{
 					g_new = cells[curr.x][curr.y].g + 14;
 				}
 
 				int h_new = heuristic(cells[next_x][next_y], end);
 
-				//jestli neni prvek uz na hranici nebo je-li nové g lepsi nez prvku na hranici, pridej potomka next jako vyse
+				//jestli neni prvek uz na hranici nebo je-li novÃ© g lepsi nez prvku na hranici, pridej potomka next jako vyse
 				//do fronty border pridam next, jeho rodice budou souradnice curr, spoctu f = g + h, bude to prvek na hranici
 				if (!on_border[next_x][next_y] || g_new < cells[next_x][next_y].g)
 				{
@@ -206,8 +206,8 @@ void graph::read_graph(const std::string& name)
 			has_path = false;
 			return;
 		}
-		matrix = vector<vector<int>>(rows, vector<int>(cols, 0)); //matice k uchování hodnot bunìk
-		cells = vector<vector<Cell>>(rows, vector<Cell>(cols)); //matice k uchování parametrù bunìk
+		matrix = vector<vector<int>>(rows, vector<int>(cols, 0)); //matice k uchovÃ¡nÃ­ hodnot bunÄ›k
+		cells = vector<vector<Cell>>(rows, vector<Cell>(cols)); //matice k uchovÃ¡nÃ­ parametrÅ¯ bunÄ›k
 
 		int value;
 		for (int i = 0; i < rows; i++)
@@ -224,7 +224,7 @@ void graph::read_graph(const std::string& name)
 				}
 				matrix[i][j] = value;
 
-				Cell c{};     //nova bunka pro grid_cells, rodice prozatím mimo, f,g,h na nule
+				Cell c{};     //nova bunka pro grid_cells, rodice prozatÃ­m mimo, f,g,h na nule
 				c.x = i;
 				c.y = j;
 				c.parentX = -1;
