@@ -33,7 +33,7 @@ Heurestická funkce využívá Diagonal distance, která se hodí pro pohyb osmi
 Otevřený seznam (open list) uchovává neprozkoumané uzly, jež má smysl procházet. Vhodné je využít prioritní frontu, ze které snadno vyjmeme buňky s nejmenší hodnotou f.
 Třída std::priority_queue implementuje prioritní frontu přes binární haldu s časovou složitostí O(log n), kde n je počet prvků ve frontě. Tak je zajištěno, že prvek s nejnižší f hodnotou je vždy na vrcholu fronty.
 
-Namísto standartní implementace uzavřeného seznamu (closed list) jsem použila matici "explored", která obsahuje hodnoty bool, jestli byla buňka už prozkoumána. Takhle můžeme již prošlé buňky při procházení sousedů aktuálního prvku cesty přeskočit.
+Namísto standartní implementace uzavřeného seznamu (closed list) je využito matice "visited", která obsahuje hodnoty bool, jestli byla buňka už prozkoumána. Takhle můžeme již prošlé buňky při procházení sousedů aktuálního prvku cesty přeskočit.
 
 ### 9) Diskuze k implementaci - možnosti dalšího vylepšení
 Jiný způsob implementace prioritní fronty je přes Fibonacciho haldu, která může být časově výhodnější, ale je zároveň složitější a nezaručuje vždy rychlejší řešení.
