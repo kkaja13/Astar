@@ -5,7 +5,7 @@ iostream: obsahuje standardní funkce pro vstup a výstup
 
 fstream: slouží ke čtení grafu, tj. matice reprezentující bludiště
 
-queue: implementace fronty, použité pro ukládání buněk na hranici
+queue: implementace prioritní fronty, použité pro ukládání buněk na hranici
 
 vector: slouží k ukládání dat (matice buněk, cesta, atd.)
 
@@ -28,7 +28,7 @@ vstupem (viz graf.txt) matice sousednosti, před ní je uvedený počet řádků
 matice reprezentuje vzdálenost jednotlivých uzlů, "0" v mřížce znázorňuje volný průchod, "1" překážku
 
 ### 7) Diskuze výběru algoritmů
-Heurestická funkce využívá Diagonal distance, která se hodí pro pohyb osmi směry (vertikální, horizontální, diagonální), jiná implementace by zahrnovala Manhattan distance (součet absolutních hodnot rozdílů souřadnic v ose x a ose y), jež by měla být rychlejší ale méně efektivní, nebo Euclidean distance (analogie Pythagorova, odmocnina součtu čtverců rozdílů souřadnic v ose x a ose y). Je možné se zabývat konkrétními případy a použití co neefektivnější heurestiky.
+Heurestická funkce využívá Manhattan distance (součet absolutních hodnot rozdílů souřadnic v ose x a ose y).
 
 Otevřený seznam (open list) uchovává neprozkoumané uzly, jež má smysl procházet. Vhodné je využít prioritní frontu, ze které snadno vyjmeme buňky s nejmenší hodnotou f.
 Třída std::priority_queue implementuje prioritní frontu přes binární haldu s časovou složitostí O(log n), kde n je počet prvků ve frontě. Tak je zajištěno, že prvek s nejnižší f hodnotou je vždy na vrcholu fronty.
